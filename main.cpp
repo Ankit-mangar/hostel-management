@@ -205,7 +205,7 @@ void display()
     gotoxy(30,13);
     for(int i=0;i<=30;i++){
         cout<<"\xB2";
-        //Sleep(300);
+        Sleep(300);
     }
     gotoxy(30,15);
     cout<<"Succefully loaded\n";
