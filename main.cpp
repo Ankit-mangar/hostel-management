@@ -10,7 +10,8 @@ class student
 {
     char hno[20];
     string name;
-    int pno;
+    int pno,ano,sno,fees;
+    string fname;
 public:
     void createstudent()
     {
@@ -22,9 +23,20 @@ public:
         cout<<"\tENTER NAME : ";
         cin>>name;
         cout<<endl;
-        cout<<"\tENTER CONTACT NO. : ";
+        cout<<"\tENTER PARENTS CONTACT NO. : ";
         cin>>pno;
         cout<<endl;
+        cout<<"\tENTER STUDENT CONTACT NO. : ";
+        cin>>sno;
+        cout<<endl;
+        cout<<"\tENTER FATHER NAME : ";
+        cin>>fname;
+        cout<<endl;
+        cout<<"\tFEES PER MONTH : ";
+        cin>>fees;
+        cout<<endl;
+        cout<<"\tENTER AADHAR NO. :";
+        cin>>ano;
         cout<<"\tDATA CREATED";
     }
     void showstudent()
@@ -34,7 +46,11 @@ public:
         cout<<"\tNAME : ";
         cout<<name;
         cout<<endl;
-        cout<<"\tCONTACT no. : "<<pno<<endl;
+        cout<<"\tPARENT CONTACT no. : "<<pno<<endl;
+        cout<<"\tSTUDENT CONTACT no. : "<<sno<<endl;
+        cout<<"\tFATHER NAME : "<<fname<<endl;
+        cout<<"\tFEES PER MONTH : "<<endl;
+        cout<<"\tAADHAR no. : "<<ano;
         getch();
 
     }
@@ -53,10 +69,10 @@ public:
     }
     void report()
     {
-        cout<<"\t"<<hno<<"                   "<<name<<"               "<<pno<<endl;
+        cout<<"\n"<<hno<<"| |"<<name<<"| |"<<pno<<"| |"<<sno<<"| |"<<fname<<"| |"<<fees<<"| |"<<ano<<endl;
     }
 };
-fstream fp,fp1;
+fstream fp;
 student st;
 
 void rstu()
@@ -162,9 +178,9 @@ void dispastu()
         return;
     }
     cout<<"\t\tSTUDENT LIST\n";
-    cout<<"==========================================================="<<endl;
-    cout<<"\tHALLTICKET NO."<<"         "<<"NAME"<<"               "<<"PNO"<<endl;
-    cout<<"==========================================================="<<endl;
+    cout<<"======================================================================================================================="<<endl;
+    cout<<"\tHALLTICKET NO."<<"| |"<<"NAME"<<"| |"<<"PARENTNO"<<"| |"<<"STUDENTNO"<<"| |"<<"FNAME"<<"| |"<<"FPM"<<"| |"<<"AADHARNO"<<endl;
+    cout<<"======================================================================================================================="<<endl;
     while(fp.read((char*)&st,sizeof(student))){
         st.report();
     }
@@ -172,7 +188,7 @@ void dispastu()
     getch();
 }
 
-void gotoxy(short x, short y)           //definition of gotoxy function//
+void gotoxy(short x, short y)
 {
  COORD pos ={x,y};
  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
@@ -189,7 +205,7 @@ void display()
     gotoxy(30,13);
     for(int i=0;i<=30;i++){
         cout<<"\xB2";
-        Sleep(300);
+        //Sleep(300);
     }
     gotoxy(30,15);
     cout<<"Succefully loaded\n";
@@ -239,12 +255,10 @@ void admin()
     int inp;
     cout<<"\t\tADMINISTRATOR MENU\n";
     cout<<"\t1. REGISTER STUDENT\n";
-    cout<<"\t2. DISPLAY ALL STUDENT RECORD\n";
-    cout<<"\t3. DISPLAY SPECFIC STUDENT RECORD\n";
-    cout<<"\t4. MODIFY STUDENT RECORD\n";
-    cout<<"\t5. DELETE STUDENT RECORD\n";
-    cout<<"\t6. PREVIOUS MENU\n";
-    cout<<"\tENTER CHOICE(1-6) : ";
+    cout<<"\t2. MODIFY STUDENT RECORD\n";
+    cout<<"\t3. DELETE STUDENT RECORD\n";
+    cout<<"\t4. PREVIOUS MENU\n";
+    cout<<"\tENTER CHOICE(1-4) : ";
     cin>>inp;
     switch(inp)
     {
@@ -252,32 +266,54 @@ void admin()
         rstu();
         break;
     case 2:
-        dispastu();
-        break;
-    case 3:
-        char a[20];
-        system("cls");
-        cout<<"\tENTER HALLTICKET : ";
-        cin>> a;
-        dispsstu(a);
-        break;
-    case 4:
         modstu();
         break;
-    case 5:
+    case 3:
         delstu();
         break;
-    case 6:
+    case 4:
         return;
     default:
         cout<<"WRONG ENTRY";
+        getch();
         goto start;
 
     }
     admin();
 }
 
+void sdetail()
+{
+    start:
+    system("cls");
+    cout<<"\t1. DISPLAY ALL STUDENT RECORD\n";
+    cout<<"\t2. DISPLAY SPECFIC STUDENT RECORD\n";
+    cout<<"\t3. PREV MENU\n";
+    int n;
+    cout<<"\tENTER YOUR CHOICE : ";
+    cin>>n;
+    switch(n)
+    {
+         case 1:
+            dispastu();
+            break;
+        case 2:
+            char a[20];
+            system("cls");
+            cout<<"\tENTER HALLTICKET : ";
+            cin>> a;
+            dispsstu(a);
+            break;
+        case 3:
+            return;
+        default:
+            cout<<"WRONG ENTRY";
+            getch();
+            goto start;
 
+    }
+    sdetail();
+}
 
 int main()
 {
@@ -297,7 +333,7 @@ int main()
         admin();
         break;
     case '2':
-        //sdetail();
+        sdetail();
     case '3':
         exit(0);
     default:
